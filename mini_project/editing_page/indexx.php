@@ -25,6 +25,8 @@ if(!isset($_SESSION['username'])) {
         <link href="assets/css/font-awesome.min.css" rel="stylesheet">
         <link href="assets/css/main.css" rel="stylesheet">
         <link rel="icon" href="assets/images/logo.png">
+
+
     </head>
 
     <body>
@@ -44,11 +46,21 @@ if(!isset($_SESSION['username'])) {
                     ?>
 
                     <!--__________________________________________isi index  -->
-                    
+
                     <form action="indexx.php" class="form_edit" method="GET">
                         <div class="form-group">
-                            <input type="name" class="form-control" name="q" id="exampleInputName" placeholder="Pencarian" value="<?php echo @$_GET['q']?>"></div>
-                            <button type="submit" class="btn btn-rabbit submit">Cari</button>
+
+                            <!-- <input type="name" class="form-control" name="q" id="exampleInputName" placeholder="Pencarian" value="<?php //echo @$_GET['q']?>"></div>
+                            <button type="submit" class="btn btn-rabbit submit">Cari</button> -->
+
+                        </form>
+
+                        <form class="form_edit">
+
+                            <input type="text" id="search" class="form-control" placeholder="Pencarian"/>
+                            <input type="button" id="button" class="btn btn-rabbit submit" value="Cari" />
+                            <ul id="result"></ul>
+
                         </form>
                         <fieldset>
                             <legend><a href="#"><strong>Tabel Data Siswa</strong></a></legend> 
@@ -111,16 +123,16 @@ if(!isset($_SESSION['username'])) {
                     <!-- <img class="img-responsive img-rabbit" src="assets/images/home.jpg"> -->
                 </div>
                 <div class="col-md-4">
-                    <div id="watermark">
+                   <!--  <div id="watermark">
                         <h2 class="page-title" text-center>Data Siswa</h2>
                         <div class="marker">Data Siswa</div>
-                    </div>
-                    <p class='subtitle'>
-                     Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam, vel, ex. </p>
+                    </div> -->
+                   <!--  <p class='subtitle'>
+                       Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam, vel, ex. </p>
 
-                     <div class="info">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos impedit sit fuga in officia, omnis rem. Sint molestias repudiandae aperiam tempore fuga atque sunt, autem quibusdam enim amet molestiae nisi!</div>
-                 </div>
-                 <div class="btn-group-vertical custom_btn">
+                       <div class="info">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos impedit sit fuga in officia, omnis rem. Sint molestias repudiandae aperiam tempore fuga atque sunt, autem quibusdam enim amet molestiae nisi!</div> -->
+                   </div>
+                   <div class="btn-group-vertical custom_btn">
                     <a href="penambahan.php" class="btn btn-rabbit _active" >Tambah</a>
                     <a href="upload_image.php" class="btn btn-rabbit">Upload</a>
                     <a href="emboh.php" class="btn btn-rabbit">Update</a>
@@ -142,8 +154,45 @@ if(!isset($_SESSION['username'])) {
     </footer>
 
 
-    <script src="assets/js/jquery-3.1.0.min.js"></script>
+    <!-- <script src="assets/js/jquery-3.1.0.min.js"></script> -->
     <script src="assets/js/bootstrap.min.js"></script>
     <script src="assets/js/main.js"></script><!-- JS -->
+    <script src="assets/js/jquery-3.1.0.min.js" type="text/javascript"></script>
+    
+    <script type="text/javascript">
+        $(document).ready(function(){
+
+           function search(){
+
+              var nama=$("#search").val();
+
+              if(nama!=""){
+                $("#result").html("<img src='assets/images/ajax-loader.gif'/>");
+                $.ajax({
+                    type:"post",
+                    url:"search.php",
+                    data:"nama="+nama,
+                    success:function(data){
+                        $("#result").html(data);
+                        $("#search").val("");
+                    }
+                });
+            }
+
+
+
+        }
+
+        $("#button").click(function(){
+           search();
+       });
+
+        $('#search').keyup(function(e) {
+           if(e.keyCode == 13) {
+            search();
+        }
+    });
+    });
+</script>
 </body>
 </html>

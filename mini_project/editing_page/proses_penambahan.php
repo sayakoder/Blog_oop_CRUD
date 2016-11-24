@@ -14,8 +14,11 @@ $param = array(
 );
 
 //________________________________________query dibawah
-$tabel = $fungsi->tambah($param);
+$siswa = $fungsi->tambah_data_siswa($param);
 
-$param['id'] = $tabel;
+$param['id_siswa'] = $siswa;
 
+$fungsi->tambah_data_nilai($param);
+
+header("location: indexx.php");
 ?>
